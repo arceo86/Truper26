@@ -12,166 +12,195 @@
 <body>
 
 <header class="hero">
-  <div class="hero-decor"></div>
-
   <div class="hero-top">
     <div class="brand-block">
-      <div class="brand-line">
-        <span class="brand">TRUPER</span><span class="brand-year">26</span>
-      </div>
-      <div class="brand-sub">Catálogo visual 2026</div>
-      <div class="brand-tag">Herramientas que hacen el trabajo</div>
+      <div class="brand-line"><span class="brand">TRUPER</span><span class="year">26</span></div>
+      <strong>Catálogo visual 2026</strong>
+      <small>Herramientas que hacen el trabajo</small>
     </div>
-
     <div class="hero-actions">
-      <button id="favTop" class="hero-icon" aria-label="Favoritos">
-        <span class="ico">♡</span><span id="favCount" class="bubble">0</span>
-      </button>
-      <button id="cartTop" class="hero-icon" aria-label="Carrito">
-        <span class="ico">🛒</span><span id="cartCount" class="bubble orange">0</span>
-      </button>
+      <button id="favTop" class="hero-action" aria-label="Favoritos"><span>♡</span><b id="favCount">0</b></button>
+      <button id="cartTop" class="hero-action" aria-label="Mi selección"><span>🛒</span><b id="cartCount" class="orange">0</b></button>
     </div>
   </div>
 
-  <div class="search-area">
+  <div class="search-row">
     <div class="searchbox">
       <span class="search-icon">⌕</span>
-      <input id="q" type="search" autocomplete="off" enterkeyhint="search"
-             placeholder="Código, clave, descripción o código de barras">
-      <button id="clear" class="clear-search" aria-label="Limpiar">×</button>
+      <input id="q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Código, clave, descripción o código de barras">
+      <button id="clearSearch" aria-label="Limpiar">×</button>
     </div>
-    <button id="scanBtn" class="scan-btn" aria-label="Escanear código">
-      <span>▥</span><small>Escanear</small>
-    </button>
+    <button id="scanBtn" class="scan-btn" aria-label="Escanear"><span>▥</span><small>Escanear</small></button>
   </div>
 
   <div id="suggestions" class="suggestions" hidden></div>
-  <div id="chips" class="chips"></div>
+  <div id="categoryChips" class="chips"></div>
 </header>
 
-<section class="catalog-toolbar">
-  <div class="catalog-count">
+<section class="resultsbar">
+  <div class="result-count">
     <strong id="stats">Cargando catálogo…</strong>
-    <small id="filterText"></small>
+    <small id="resultContext"></small>
   </div>
-
-  <div class="toolbar-right">
-    <label class="compact-select">
-      <span>Precio</span>
-      <select id="priceMode">
-        <option value="3">Público</option>
-        <option value="2">Medio mayoreo</option>
-        <option value="1">Mayoreo</option>
-        <option value="0">Distribuidor</option>
-      </select>
-    </label>
-
-    <label class="compact-select sort-select">
-      <span>Orden</span>
-      <select id="sort">
-        <option value="default">Relevancia</option>
-        <option value="priceAsc">Precio ↑</option>
-        <option value="priceDesc">Precio ↓</option>
-        <option value="key">Clave A–Z</option>
-      </select>
-    </label>
-
-    <button id="view" class="layout-btn" aria-label="Cambiar vista">▦</button>
+  <div class="result-actions">
+    <button id="filterBtn" class="filter-btn">☷ <span>Filtros</span><b id="filterCount" hidden>0</b></button>
+    <select id="sort" aria-label="Ordenar">
+      <option value="relevance">Relevancia</option>
+      <option value="priceAsc">Precio ↑</option>
+      <option value="priceDesc">Precio ↓</option>
+      <option value="key">Clave A-Z</option>
+    </select>
+    <button id="viewToggle" class="view-btn" aria-label="Cambiar vista">▦</button>
   </div>
 </section>
 
+<div id="appliedFilters" class="applied-filters" hidden></div>
+
 <main class="page">
+  <section id="quickPanel" class="quick-panel">
+    <div class="quick-title"><strong>Accesos rápidos</strong><button id="hideQuick">Ocultar</button></div>
+    <div class="quick-grid">
+      <button id="quickFavorites"><span>♡</span><strong>Favoritos</strong><small>Guardados</small></button>
+      <button id="quickHistory"><span>◷</span><strong>Historial</strong><small>Vistos recientemente</small></button>
+      <button id="quickCompare"><span>⇆</span><strong>Comparar</strong><small id="compareCount">0 seleccionados</small></button>
+      <button id="quickCart"><span>🛒</span><strong>Selección</strong><small id="quickCartCount">0 productos</small></button>
+    </div>
+  </section>
+
   <section id="grid" class="grid" aria-live="polite"></section>
 
   <div id="empty" class="empty" hidden>
-    <div class="empty-icon">⌕</div>
+    <div>⌕</div>
     <h3>No encontramos coincidencias</h3>
-    <p>Prueba con otra clave, código, descripción o código de barras.</p>
+    <p>Prueba otra clave, código, descripción o cambia los filtros.</p>
+    <button id="resetEmpty">Limpiar filtros</button>
   </div>
 
-  <div class="load-wrap">
-    <button id="loadMore" class="load-more">Cargar más productos</button>
-  </div>
+  <div class="load-wrap"><button id="loadMore">Cargar más productos</button></div>
 
   <footer class="app-footer">
-    <div class="footer-brand">
-      <strong>FERRE<span>POCKET</span></strong>
-      <small>Soluciones para tu negocio</small>
-    </div>
-    <div class="signature">
-      <span>By Ing. J. Roberto Arce A.</span>
-      <small>Tecnología que impulsa tu negocio</small>
-    </div>
-    <div class="footer-meta">
-      <span>Catálogo Truper 2026</span>
-      <small>14,705 productos · v4.0</small>
-    </div>
+    <div class="fp-brand"><strong>FERRE<span>POCKET</span></strong><small>Soluciones para tu negocio</small></div>
+    <div class="signature"><span>By Ing. J. Roberto Arce A.</span><small>Tecnología que impulsa tu negocio</small></div>
+    <div class="version"><span>Catálogo Truper 2026</span><small>14,705 productos · v5.0</small></div>
   </footer>
 </main>
 
 <button id="toTop" class="to-top" aria-label="Volver arriba">↑</button>
 
-<!-- PRODUCT DETAIL -->
+<!-- PRODUCT -->
 <div id="productModal" class="modal" hidden>
-  <div class="modal-shade" data-close-product></div>
-  <article class="bottom-sheet product-sheet">
-    <div class="sheet-handle"></div>
-    <button class="modal-close" data-close-product>×</button>
+  <div class="shade" data-close-product></div>
+  <article class="sheet product-sheet">
+    <div class="handle"></div><button class="close" data-close-product>×</button>
     <div id="productBody"></div>
   </article>
 </div>
 
-<!-- CART -->
-<div id="cartModal" class="modal" hidden>
-  <div class="modal-shade" data-close-cart></div>
-  <article class="bottom-sheet cart-sheet">
-    <div class="sheet-handle"></div>
-    <button class="modal-close" data-close-cart>×</button>
-    <div class="sheet-title">
-      <div><small>TRUPER26</small><h2>Mi selección</h2></div>
-      <button id="clearCart" class="text-btn">Vaciar</button>
+<!-- FILTERS -->
+<div id="filterModal" class="modal" hidden>
+  <div class="shade" data-close-filter></div>
+  <article class="sheet filter-sheet">
+    <div class="handle"></div>
+    <div class="sheet-head"><div><small>CATÁLOGO</small><h2>Filtrar productos</h2></div><button class="close inline-close" data-close-filter>×</button></div>
+    <div class="filter-section">
+      <h3>Precio mostrado</h3>
+      <div id="priceModeOptions" class="segmented">
+        <button data-price-mode="3" class="active">Público</button>
+        <button data-price-mode="2">Medio M.</button>
+        <button data-price-mode="1">Mayoreo</button>
+        <button data-price-mode="0">Distribuidor</button>
+      </div>
     </div>
-    <div id="cartBody"></div>
+    <div class="filter-section">
+      <h3>Rango de precio</h3>
+      <div class="range-inputs">
+        <label>Desde <input id="minPrice" type="number" min="0" inputmode="decimal" placeholder="$0"></label>
+        <label>Hasta <input id="maxPrice" type="number" min="0" inputmode="decimal" placeholder="Sin límite"></label>
+      </div>
+    </div>
+    <div class="filter-section">
+      <h3>Disponibilidad de imagen</h3>
+      <label class="checkrow"><input id="onlyImage" type="checkbox"> Solo productos con imagen configurada</label>
+    </div>
+    <div class="filter-section">
+      <h3>Marca</h3>
+      <div id="brandOptions" class="check-grid"></div>
+    </div>
+    <div class="filter-footer">
+      <button id="clearFilters" class="secondary">Limpiar</button>
+      <button id="applyFilters" class="primary">Ver <span id="previewCount">14,705</span> resultados</button>
+    </div>
+  </article>
+</div>
+
+<!-- CART NORMALIZED -->
+<div id="cartModal" class="modal" hidden>
+  <div class="shade" data-close-cart></div>
+  <article class="sheet cart-sheet">
+    <div class="handle"></div>
+    <div class="sheet-head cart-head">
+      <div><small>TRUPER26</small><h2>Mi selección</h2><p id="cartSubtitle">0 productos</p></div>
+      <button class="close inline-close" data-close-cart>×</button>
+    </div>
+    <div id="cartBody" class="cart-body"></div>
+    <div id="cartSummary" class="cart-summary" hidden>
+      <div><span>Total de referencia</span><b id="cartTotal">$0.00</b></div>
+      <small>Calculado con el nivel de precio seleccionado. No representa existencia ni una orden de venta.</small>
+      <div class="cart-bottom-actions">
+        <button id="copyCart" class="secondary">Copiar lista</button>
+        <button id="clearCart" class="danger-lite">Vaciar selección</button>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- COMPARE -->
+<div id="compareModal" class="modal" hidden>
+  <div class="shade" data-close-compare></div>
+  <article class="sheet compare-sheet">
+    <div class="handle"></div>
+    <div class="sheet-head"><div><small>COMPARADOR</small><h2>Comparar productos</h2></div><button class="close inline-close" data-close-compare>×</button></div>
+    <div id="compareBody"></div>
+  </article>
+</div>
+
+<!-- HISTORY -->
+<div id="historyModal" class="modal" hidden>
+  <div class="shade" data-close-history></div>
+  <article class="sheet history-sheet">
+    <div class="handle"></div>
+    <div class="sheet-head"><div><small>RECIENTES</small><h2>Vistos recientemente</h2></div><button class="close inline-close" data-close-history>×</button></div>
+    <div id="historyBody"></div>
   </article>
 </div>
 
 <!-- SCANNER -->
 <div id="scannerModal" class="modal" hidden>
-  <div class="modal-shade" data-close-scanner></div>
-  <article class="bottom-sheet scanner-sheet">
-    <div class="sheet-handle"></div>
-    <button class="modal-close" data-close-scanner>×</button>
-    <h2>Escanear código</h2>
-    <video id="video" playsinline autoplay muted></video>
+  <div class="shade" data-close-scanner></div>
+  <article class="sheet scanner-sheet">
+    <div class="handle"></div><button class="close" data-close-scanner>×</button>
+    <h2>Escanear código</h2><video id="video" playsinline autoplay muted></video>
     <p id="scanStatus">Apunta la cámara al código de barras.</p>
   </article>
 </div>
 
 <!-- MORE -->
 <div id="moreModal" class="modal" hidden>
-  <div class="modal-shade" data-close-more></div>
-  <article class="bottom-sheet more-sheet">
-    <div class="sheet-handle"></div>
-    <button class="modal-close" data-close-more>×</button>
+  <div class="shade" data-close-more></div>
+  <article class="sheet more-sheet">
+    <div class="handle"></div><button class="close" data-close-more>×</button>
     <h2>Truper26</h2>
-    <div class="info-card">
-      <strong>Catálogo visual 2026</strong>
-      <p>Consulta rápida de 14,705 productos, cuatro niveles de precio e imágenes de producto.</p>
-    </div>
-    <div class="author-card">
-      <span class="author-label">Desarrollado por</span>
-      <div class="author-sign">By Ing. J. Roberto Arce A.</div>
-      <small>FERREPOCKET · Tecnología que impulsa tu negocio</small>
-    </div>
+    <div class="about-card"><strong>Catálogo visual 2026</strong><p>Consulta de productos, precios de referencia, búsqueda avanzada, filtros, favoritos, comparación y selección.</p></div>
+    <div class="author-card"><small>Desarrollado por</small><div>By Ing. J. Roberto Arce A.</div><span>FERREPOCKET · Tecnología que impulsa tu negocio</span></div>
   </article>
 </div>
 
 <nav class="bottom-nav">
-  <button id="navHome" class="active"><span class="nav-icon">⌂</span><span>Inicio</span></button>
-  <button id="navCats"><span class="nav-icon">▦</span><span>Categorías</span></button>
-  <button id="navFavs"><span class="nav-icon">♡</span><span>Favoritos</span></button>
-  <button id="navHistory"><span class="nav-icon">◷</span><span>Historial</span></button>
-  <button id="navMore"><span class="nav-icon">ⓘ</span><span>Más</span></button>
+  <button id="navHome" class="active"><span>⌂</span><small>Inicio</small></button>
+  <button id="navCats"><span>▦</span><small>Categorías</small></button>
+  <button id="navFavs"><span>♡</span><small>Favoritos</small></button>
+  <button id="navHistory"><span>◷</span><small>Historial</small></button>
+  <button id="navMore"><span>ⓘ</span><small>Más</small></button>
 </nav>
 
 <script src="app.js"></script>
