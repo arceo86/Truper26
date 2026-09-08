@@ -3,94 +3,175 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0e1c26">
+<meta name="theme-color" content="#0b1822">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Truper26 · Catálogo 2026</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="app-header">
-  <div class="topbar">
-    <div class="brandbox">
-      <div class="brand">TRUPER<span>26</span></div>
-      <div class="subtitle">Catálogo 2026</div>
+<header class="hero">
+  <div class="hero-decor"></div>
+
+  <div class="hero-top">
+    <div class="brand-block">
+      <div class="brand-line">
+        <span class="brand">TRUPER</span><span class="brand-year">26</span>
+      </div>
+      <div class="brand-sub">Catálogo visual 2026</div>
+      <div class="brand-tag">Herramientas que hacen el trabajo</div>
     </div>
-    <button id="favTop" class="header-btn" aria-label="Favoritos">♡ <span id="favCount">0</span></button>
+
+    <div class="hero-actions">
+      <button id="favTop" class="hero-icon" aria-label="Favoritos">
+        <span class="ico">♡</span><span id="favCount" class="bubble">0</span>
+      </button>
+      <button id="cartTop" class="hero-icon" aria-label="Carrito">
+        <span class="ico">🛒</span><span id="cartCount" class="bubble orange">0</span>
+      </button>
+    </div>
   </div>
 
-  <div class="search-wrap">
+  <div class="search-area">
     <div class="searchbox">
-      <span class="search-ico">⌕</span>
+      <span class="search-icon">⌕</span>
       <input id="q" type="search" autocomplete="off" enterkeyhint="search"
-             placeholder="Código, clave, descripción o barras">
-      <button id="clear" class="clear-btn" aria-label="Limpiar búsqueda">×</button>
+             placeholder="Código, clave, descripción o código de barras">
+      <button id="clear" class="clear-search" aria-label="Limpiar">×</button>
     </div>
-    <button id="scanBtn" class="scan-btn" aria-label="Escanear código">▥</button>
+    <button id="scanBtn" class="scan-btn" aria-label="Escanear código">
+      <span>▥</span><small>Escanear</small>
+    </button>
   </div>
 
-  <div id="chips" class="chips" aria-label="Categorías"></div>
+  <div id="suggestions" class="suggestions" hidden></div>
+  <div id="chips" class="chips"></div>
 </header>
 
-<section class="controlbar">
-  <div class="count">
+<section class="catalog-toolbar">
+  <div class="catalog-count">
     <strong id="stats">Cargando catálogo…</strong>
     <small id="filterText"></small>
   </div>
-  <div class="controls">
-    <select id="priceMode" aria-label="Precio principal">
-      <option value="3">Público</option>
-      <option value="2">Medio mayoreo</option>
-      <option value="1">Mayoreo</option>
-      <option value="0">Distribuidor</option>
-    </select>
-    <select id="sort" aria-label="Ordenar">
-      <option value="default">Relevancia</option>
-      <option value="priceAsc">Precio ↑</option>
-      <option value="priceDesc">Precio ↓</option>
-      <option value="key">Clave A-Z</option>
-    </select>
-    <button id="view" class="view-btn" aria-label="Cambiar vista">▦</button>
+
+  <div class="toolbar-right">
+    <label class="compact-select">
+      <span>Precio</span>
+      <select id="priceMode">
+        <option value="3">Público</option>
+        <option value="2">Medio mayoreo</option>
+        <option value="1">Mayoreo</option>
+        <option value="0">Distribuidor</option>
+      </select>
+    </label>
+
+    <label class="compact-select sort-select">
+      <span>Orden</span>
+      <select id="sort">
+        <option value="default">Relevancia</option>
+        <option value="priceAsc">Precio ↑</option>
+        <option value="priceDesc">Precio ↓</option>
+        <option value="key">Clave A–Z</option>
+      </select>
+    </label>
+
+    <button id="view" class="layout-btn" aria-label="Cambiar vista">▦</button>
   </div>
 </section>
 
-<main>
+<main class="page">
   <section id="grid" class="grid" aria-live="polite"></section>
+
   <div id="empty" class="empty" hidden>
     <div class="empty-icon">⌕</div>
-    <h3>No encontré productos</h3>
-    <p>Prueba con otra clave, código o descripción.</p>
+    <h3>No encontramos coincidencias</h3>
+    <p>Prueba con otra clave, código, descripción o código de barras.</p>
   </div>
-  <div class="loadmore-wrap">
-    <button id="loadMore" class="loadmore">Cargar más</button>
+
+  <div class="load-wrap">
+    <button id="loadMore" class="load-more">Cargar más productos</button>
   </div>
+
+  <footer class="app-footer">
+    <div class="footer-brand">
+      <strong>FERRE<span>POCKET</span></strong>
+      <small>Soluciones para tu negocio</small>
+    </div>
+    <div class="signature">
+      <span>By Ing. J. Roberto Arce A.</span>
+      <small>Tecnología que impulsa tu negocio</small>
+    </div>
+    <div class="footer-meta">
+      <span>Catálogo Truper 2026</span>
+      <small>14,705 productos · v4.0</small>
+    </div>
+  </footer>
 </main>
 
-<button id="top" class="topbtn" aria-label="Ir arriba">↑</button>
+<button id="toTop" class="to-top" aria-label="Volver arriba">↑</button>
 
-<div id="modal" class="modal" hidden>
-  <div class="shade" data-close></div>
-  <article class="sheet" role="dialog" aria-modal="true">
+<!-- PRODUCT DETAIL -->
+<div id="productModal" class="modal" hidden>
+  <div class="modal-shade" data-close-product></div>
+  <article class="bottom-sheet product-sheet">
     <div class="sheet-handle"></div>
-    <button class="modal-x" data-close aria-label="Cerrar">×</button>
-    <div id="modalBody"></div>
+    <button class="modal-close" data-close-product>×</button>
+    <div id="productBody"></div>
   </article>
 </div>
 
-<div id="scanner" class="modal" hidden>
-  <div class="shade" data-scan-close></div>
-  <article class="scanner-sheet">
-    <button class="modal-x" data-scan-close>×</button>
-    <h3>Escanear código</h3>
+<!-- CART -->
+<div id="cartModal" class="modal" hidden>
+  <div class="modal-shade" data-close-cart></div>
+  <article class="bottom-sheet cart-sheet">
+    <div class="sheet-handle"></div>
+    <button class="modal-close" data-close-cart>×</button>
+    <div class="sheet-title">
+      <div><small>TRUPER26</small><h2>Mi selección</h2></div>
+      <button id="clearCart" class="text-btn">Vaciar</button>
+    </div>
+    <div id="cartBody"></div>
+  </article>
+</div>
+
+<!-- SCANNER -->
+<div id="scannerModal" class="modal" hidden>
+  <div class="modal-shade" data-close-scanner></div>
+  <article class="bottom-sheet scanner-sheet">
+    <div class="sheet-handle"></div>
+    <button class="modal-close" data-close-scanner>×</button>
+    <h2>Escanear código</h2>
     <video id="video" playsinline autoplay muted></video>
     <p id="scanStatus">Apunta la cámara al código de barras.</p>
   </article>
 </div>
 
-<nav class="bottomnav">
-  <button id="home" class="active">⌂<span>Inicio</span></button>
-  <button id="cats">▦<span>Categorías</span></button>
-  <button id="favs">♡<span>Favoritos</span></button>
-  <button id="up">↑<span>Arriba</span></button>
+<!-- MORE -->
+<div id="moreModal" class="modal" hidden>
+  <div class="modal-shade" data-close-more></div>
+  <article class="bottom-sheet more-sheet">
+    <div class="sheet-handle"></div>
+    <button class="modal-close" data-close-more>×</button>
+    <h2>Truper26</h2>
+    <div class="info-card">
+      <strong>Catálogo visual 2026</strong>
+      <p>Consulta rápida de 14,705 productos, cuatro niveles de precio e imágenes de producto.</p>
+    </div>
+    <div class="author-card">
+      <span class="author-label">Desarrollado por</span>
+      <div class="author-sign">By Ing. J. Roberto Arce A.</div>
+      <small>FERREPOCKET · Tecnología que impulsa tu negocio</small>
+    </div>
+  </article>
+</div>
+
+<nav class="bottom-nav">
+  <button id="navHome" class="active"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+  <button id="navCats"><span class="nav-icon">▦</span><span>Categorías</span></button>
+  <button id="navFavs"><span class="nav-icon">♡</span><span>Favoritos</span></button>
+  <button id="navHistory"><span class="nav-icon">◷</span><span>Historial</span></button>
+  <button id="navMore"><span class="nav-icon">ⓘ</span><span>Más</span></button>
 </nav>
 
 <script src="app.js"></script>
