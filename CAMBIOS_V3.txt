@@ -1,0 +1,27 @@
+TRUPER26 V3 MÓVIL PRO
+
+Reemplazar únicamente:
+- index.html
+- styles.css
+- app.js
+- service-worker.js
+
+NO reemplazar products.json.
+
+Cambios principales:
+- Header 30% más compacto.
+- Búsqueda móvil mejor aprovechada.
+- Escáner de barras usando BarcodeDetector cuando Android/Chrome lo soporte.
+- Categorías inferidas por descripción y clave.
+- Filtro de precio principal D/M/MM/P.
+- Precio principal destacado.
+- Tarjetas más compactas y con menos espacio vacío.
+- Cargar más en vez de paginación.
+- Favoritos locales.
+- Vista lista/tarjetas.
+- Ficha de producto tipo bottom-sheet.
+- Enlace a ficha oficial cuando el producto la incluya.
+- Copiar datos del producto.
+- Búsqueda sin acentos.
+- Skeleton de carga.
+- Cache PWA v3 y limpieza automática de caches anteriores.
